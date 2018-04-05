@@ -29,8 +29,12 @@ function findUser(userName) {
     models.User.findOne({
         where: {
             user_name: userName
-        }
-    }).then(user => console.log(user.dataValues)
+        },
+        include:[{
+            model: models.Groups,
+            through: ["id"]
+        }]
+    }).then(user => return user.get({plain:true})
     ).catch(err => console.log(err));
 }
 

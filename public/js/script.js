@@ -198,7 +198,8 @@ googleMapInit = () =>{
               this.bounds = new google.maps.LatLngBounds();
               this.placesList = document.getElementById('places');
               $('#map-select').empty()
-              for (let i = 0, place; place = places[i]; i++) {
+              for (let i = 0 ; i<places.length ; i++) {
+                let place = places[i];
                 this.image = {
                   url: place.icon,
                   size: new google.maps.Size(71, 71),
@@ -214,11 +215,7 @@ googleMapInit = () =>{
                 });                  
                 markers.push(marker);
                 placesArr.push(place);
-                populateRoute();
-                $('#map-select').append($('<option>', {
-                  value: i,
-                  text: place.name
-                }));
+                populateRoute();                
                 bounds.extend(place.geometry.location);
 
                 logPlaceDetails(place.place_id);
@@ -229,7 +226,8 @@ googleMapInit = () =>{
                     placeId: location
                   },
                   function(place, status) {
-                    console.log("Place details:", place);
+                    //console.log("Place details:", place);
+                    $('#map-select')[0].options.add(new Option(place.name));
                     createInfoBox(place);
                   }
                   );
@@ -283,6 +281,5 @@ googleMapInit = () =>{
                 $('#mainNav_items').append(data);
               });
             });    
-
+            googleMapInit();
           });
-          googleMapInit();

@@ -11,11 +11,8 @@ route.get('/', (req, res, next) => {
 /* GET user profile. */
 route.get('/groups', (req, res, next) => {
     let user = req.user;  
-    let userData = {user:req.user, groups:gdb.findGroups([
-            user.user_route_one,
-            user.user_route_two,
-            user.user_route_three
-    	]).get({plain:true})}
+    let userData = {user:req.user, groups:udb
+    });
 
     
 });

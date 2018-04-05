@@ -2,9 +2,10 @@ const models = require("../models");
 
 module.exports = {
   // Allows the user to create a group and then links the user to the group
-  createGroup: (groupname, userId) => {
+  createGroup: (groupname, userId, route) => {
       models.Groups.create({
-          group_name: groupname
+          group_name: groupname,
+          route: route
       })
       .then( function(group) { 
           models.User.findById(userId)
@@ -71,19 +72,25 @@ module.exports = {
           order: [
               ['group_members', 'DESC']
           ],
-          limit: 5
+          limit: 5,
+          plain:true
           // again brings large array back, will have to select info we need here or server side
-      }).then( groups => console.log(groups));
+      }).then( groups => groups.map(group => group.id);
   },
 
+
   // Finds and returns a specific group by group name
-  findGroups: (groupNames) => {
+  findGroups: (ids) => {
      models.Groups.findAll({
        where: {
          group_name: models.Sequelize.or(
-          {id:groupNames}
+          {id:ids}
           )
-       }
+       },
+       include: [{
+         model: models.User,
+         through: ["user_name"]
+         }]
      }).then(function(group) {
         
      }).catch(err => console.log(err)); 

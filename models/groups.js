@@ -16,10 +16,6 @@ module.exports = function(sequelize, DataTypes) {
             type: DataTypes.DECIMAL(6,2),
             allowNull: true
         },
-        event_spots: {
-            type: DataTypes.INTEGER,
-            allowNull: true
-        },
         route: {
             type: DataTypes.TEXT,
             allowNull: true
