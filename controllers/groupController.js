@@ -75,7 +75,7 @@ module.exports = {
           limit: 5,
           plain:true
           // again brings large array back, will have to select info we need here or server side
-      }).then( groups => groups.map(group => group.id);
+      }).then( groups => groups.map(group => group.id));
   },
 
 

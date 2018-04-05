@@ -1,6 +1,4 @@
-
-
-<div class="portfolio-modal modal fade" id="show-route-modal" tabindex="1" role="dialog" aria-hidden="true">
+<div class="portfolio-modal modal fade" id="show-route-modal" tabindex="-1" role="dialog" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="close-modal" data-dismiss="modal">
@@ -8,45 +6,37 @@
                     <div class="rl"></div>
                 </div>
             </div>
+            <h1>Here's Your Route!</h1>
+            <div id="routemap"></div>
             <div class="container">
                 <div class="row">
                     <div class="col-lg-12 mx-auto">
                         <div class="modal-body">
                             <div class="container">
                                 <div class="row mbr">
-                                    <h2 class="text-uppercase" id="PLACEHOLDER"></h2>
+                                    <h2 class="text-uppercase" id="create-group-title"></h2>
                                 </div>
                                 <!-- Project Details Go Here -->
-                                <div class="row mbr"></div>
                                 <div class="row mbr">
                                     <div class="col-6">
-                                        <button class="btn btn-primary pull-left" id="words">Preview Title </button>
-                                        <input type="text" id="newwords" value="Group Name">
+                                        <button class="btn btn-primary pull-left" id="create_title_button">Preview Title </button>
+                                        <input type="text" id="group_title_input" value="Group Name">
                                     </div>
                                 </div>
-                                <div class="pro-holder">
-                                    <ol class="pro-meter">
-                                        <li class="pro-point todo" >Choose starting spot!</li>
-                                        <li class="pro-point todo" >Choose next</li>
-                                        <li class="pro-point todo" >Choose final spot!</li>
-                                        <li class="pro-point todo" >Create Your Route!</li>
-                                    </ol>
-                                </div>
-                                <button class="btn btn-primary" id="routeAdded" type="button">
+                                <button class="btn btn-primary" id="createGroup" type="button">
                                     <i class="fa"></i>
-                                    Add Location to your route!</button>
-                                <button class="btn btn-primary" id="createdGroup" type="button">
-                                    <i class="fa"></i>
-                                    Click Here to Finalize Your Group!</button>
+                                    Create Your Group!</button>
                             </div>
-                            <div id="place-lists" class="container py-3">
+                            <div id="route-place-list" class="container py-3">
 
                             </div>
-                            <div id="placesInfos"></div>
+                            <div id="routePlacesInfo"></div>
+                            <div id="directionsPanel"></div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
+</div>
 </div>

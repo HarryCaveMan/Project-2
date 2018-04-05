@@ -34,7 +34,7 @@ function findUser(userName) {
             model: models.Groups,
             through: ["id"]
         }]
-    }).then(user => return user.get({plain:true})
+    }).then(user => user.get({plain:true})
     ).catch(err => console.log(err));
 }
 
@@ -47,6 +47,4 @@ function searchAllUsers() {
     }).then(users => console.log(users))
     .catch(err => console.log(err));
 }
-
-
 

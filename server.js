@@ -6,6 +6,7 @@ const socket = require('socket.io');
 const PORT = process.env.PORT || 8080;
 
 const app = express();
+const http = require("http").Server(app);
 // requires models to sync database
 const db = require('./models');
 
@@ -33,7 +34,7 @@ require("./controllers/groupController.js")(app);
 
 // syncs the database !!! CHANGE FORCE TO FALSE BEFORE DEPLOYMENT !!! and starts the server
 db.sequelize.sync().then(function() {
-  app.listen(PORT, function() {
+  http.listen(PORT, function() {
     console.log("App listening on PORT " + PORT);
   });
 });

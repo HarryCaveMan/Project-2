@@ -6,61 +6,49 @@
           <div class="rl"></div>
         </div>
       </div>
-      <h1>EventHop Map</h1>
+      <h1>Downtown Durham</h1>
       <div id="map"></div>
       <div class="container">
         <div class="row">
           <div class="col-lg-12 mx-auto">
             <div class="modal-body">
               <div class="container">
-                <div class="row mbr">
-                  <h2 class="text-uppercase" id="create-group-title"></h2>
-                </div>
                 <!-- Project Details Go Here -->
-
-         
-
-                <div class="row mbr">
-                  <button class="btn btn-primary"  id="cafes">
-                  Cafes</button>
-                  <button class="btn btn-primary"  id="bar">
-                  Bars</button>
-                  <button class="btn btn-primary"  id="restaurant">
-                  Restaurant</button>
-                  <button class="btn btn-primary"  id="art_gallery">
-                  Art Galleries</button>
-                  <button class="btn btn-primary"  id="movie_theater">
-                  Movie Theaters</button>
+                <div class="row mbr justify-content-center">
+                  <button class="btn btn-primary" id="cafes">
+                    Cafes</button>
+                  <button class="btn btn-primary" id="bar">
+                    Bars</button>
+                  <button class="btn btn-primary" id="restaurant">
+                    Restaurant</button>
+                  <button class="btn btn-primary" id="art_gallery">
+                    Art Galleries</button>
+                  <button class="btn btn-primary" id="movie_theater">
+                    Movie Theaters</button>
                   <button class="btn btn-primary" id="spa">
-                  Spa</button>
+                    Spa</button>
+                  <div class="col-6" id='map-select-div'>
+                    <select id="map-select"></select>
+                  </div>
                 </div>
-                <div class="row mbr">
-                  <div class ="col-6">
-                   <select id="map-select"></select>                 
-                 </div>
-                 <div class ="col-6">
-
-                   <button class="btn btn-primary pull-left"  id="create_title_button">Prieview Title </button>
-
-                   <input type="text" id="group_title_input" value="Group Name">
-                 </div>
-               </div>
-              <div class="pro-holder">
-                <ol class="pro-meter">
-                  <li class="pro-point todo" id="progOne">Choose starting spot!</li><li class="pro-point todo" id="progTwo">Choose next</li><li class="pro-point todo" id="progThree">Choose final spot!</li><li class="pro-point todo" id="progFour">Create Your Route!</li>
-                </ol>
+                <div class="pro-holder">
+                  <ol class="pro-meter">
+                    <li class="pro-point todo" id="progOne">Choose starting spot!</li><li class="pro-point todo" id="progTwo">Choose next</li><li class="pro-point todo" id="progThree">Choose final spot!</li><li class="pro-point todo" id="progFour">Create Your Route!</li>
+                  </ol>
+                </div>
+                <button class="btn btn-primary" id="routeAdd" type="button">
+                  <i class="fa"></i>
+                  Add Location to your route!</button>
+                <a class="btn btn-primary" data-dismiss="modal" data-toggle="modal" href="#show-route-modal" id="openRouteModal">
+                  <i class="fa"></i>
+                  Click Here to See Your Route!</a>
               </div>
-              <button class="btn btn-primary" id="routeAdd" type="button">
-                <i class="fa"></i>
-                Add Location to your route!</button>
-              <a class="btn btn-primary" data-dismiss="modal" data-toggle="modal" href="#show-route" id="openRouteModal">
-                <i class="fa"></i>
-                Click Here to See Your Route!</a>
+              <div id="place-list" class="container py-3">
+
+              </div>
+              <div id="placesInfo"></div>
+              <div id="directionsPanel"></div>
             </div>
-            <div id="place-list" class="container py-3">
-            
-            </div>
-            <div id="placesInfo"></div>
           </div>
         </div>
       </div>

@@ -12,9 +12,7 @@ route.get('/', (req, res, next) => {
 route.get('/groups', (req, res, next) => {
     let user = req.user;  
     let userData = {user:req.user, groups:udb
-    });
-
-    
+    }    
 });
 
 route.get('/nav', (req,res,next) => {
