@@ -203,8 +203,10 @@ letter-spacing: 4px;
   width: 100%;
 }
 #directionsPanel {
-            float: right;
-            width: 30%;
+  float: right;
+  height: 250px;
+  width: 30%;
+  overflow-y: scroll;
 }
 #map {
   height: 400px;
@@ -306,6 +308,11 @@ header.masthead .intro-text .intro-heading {
 
 #show-route-modal {
   overflow-y:auto;
+}
+
+#route-place-list {
+  float: left;
+
 }
 
 .portfolio-item {
@@ -772,7 +779,6 @@ ul.social-buttons li a {
   outline: none;
   background-color: #212529;
 }
-
 ul.social-buttons li a:active, ul.social-buttons li a:focus, ul.social-buttons li a:hover {
   background-color: #647595;
 }
@@ -794,79 +800,170 @@ ul.social-buttons li a:active, ul.social-buttons li a:focus, ul.social-buttons l
   width:100%;
   overflow-x:scroll;
 }
+
 .card {
-            margin: 45px;
-        }
-        img.progress {
-            height: auto;
-        }
-        
-        .pro-holder {
-            width: 1000px;
-            margin: 0 auto;
-        }   
+  margin: 45px;
+}
 
-        .pro-meter {
-            padding: 0;
-        }
+img.progress {
+  height: auto;
+}
 
-        ol.pro-meter {
-            padding-bottom: 9.5px;
-            list-style-type: none;
-        }
-        ol.pro-meter li {
-            display: inline-block;
-            text-align: center;
-            text-indent: -19px;
-            height: 36px;
-            width: 24.99%;
-            font-size: 12px;
-            border-bottom-width: 4px;
-            border-bottom-style: solid;
-        }
-        ol.pro-meter li:before {
-            position: relative;
-            float: left;
-            text-indent: 0;
-            left: -webkit-calc(50% - 9.5px);
-            left: -moz-calc(50% - 9.5px);
-            left: -ms-calc(50% - 9.5px);
-            left: -o-calc(50% - 9.5px);
-            left: calc(50% - 9.5px);
-        }
-        ol.pro-meter li.done {
-            font-size: 12px;
-        }
-        ol.pro-meter li.done:before {
-            content: "\2713";
-            height: 19px;
-            width: 19px;
-            line-height: 21.85px;
-            bottom: -28.175px;
-            border: none;
-            border-radius: 19px;
-        }
-        ol.pro-meter li.todo {
-            font-size: 12px;
-        }
-        ol.pro-meter li.todo:before {
-            content: "\2B24";
-            font-size: 17.1px;
-            bottom: -26.95px;
-            line-height: 18.05px;
-        }
-        ol.pro-meter li.done {
-            color: black;
-            border-bottom-color: yellowgreen;
-        }
-        ol.pro-meter li.done:before {
-            color: white;
-            background-color: yellowgreen;
-        }
-        ol.pro-meter li.todo {
-            color: silver;
-            border-bottom-color: silver;
-        }
-        ol.pro-meter li.todo:before {
-            color: silver;
-        }
+.pro-holder {
+  width: 1000px;
+  margin: 0 auto;
+}
+
+.pro-meter {
+padding: 0;
+}
+
+ol.pro-meter {
+  padding-bottom: 9.5px;
+  list-style-type: none;
+}
+
+ol.pro-meter li {
+  display: inline-block;
+  text-align: center;
+  text-indent: -19px;
+  height: 36px;
+  width: 24.99%;
+  font-size: 12px;
+  border-bottom-width: 4px;
+  border-bottom-style: solid;
+}
+
+ol.pro-meter li:before {
+  position: relative;
+  float: left;
+  text-indent: 0;
+  left: -webkit-calc(50% - 9.5px);
+  left: -moz-calc(50% - 9.5px);
+  left: -ms-calc(50% - 9.5px);
+  left: -o-calc(50% - 9.5px);
+  left: calc(50% - 9.5px);
+}
+
+ol.pro-meter li.done {
+font-size: 12px;
+}
+
+ol.pro-meter li.done:before {
+  content: "\2713";
+  height: 19px;
+  width: 19px;
+  line-height: 21.85px;
+  bottom: -28.175px;
+  border: none;
+  border-radius: 19px;
+}
+
+ol.pro-meter li.todo {
+  font-size: 12px;
+}
+
+ol.pro-meter li.todo:before {
+  content: "\2B24";
+  font-size: 17.1px;
+  bottom: -26.95px;
+  line-height: 18.05px;
+}
+
+ol.pro-meter li.done {
+  color: black;
+  border-bottom-color: yellowgreen;
+}
+
+ol.pro-meter li.done:before {
+  color: white;
+  background-color: yellowgreen;
+}
+
+ol.pro-meter li.todo {
+  color: silver;
+  border-bottom-color: silver;
+}
+
+ol.pro-meter li.todo:before {
+  color: silver;
+}
+
+.wrapper {
+  /* The height needs to be set to a fixed value for the effect to work.
+   * 100vh is the full height of the viewport. */
+  height: 100vh;
+  /* The scaling of the images would add a horizontal scrollbar, so disable x overflow. */
+  overflow-x: hidden;
+  /* Enable scrolling on the page. */
+  overflow-y: auto;
+  /* Set the perspective to 2px. This is essentailly the simulated distance from the viewport to transformed objects.*/
+  perspective: 2px;
+}
+
+.section {
+  /* Needed for children to be absolutely positioned relative to the parent. */
+  position: relative;
+  /* The height of the container. Must be set, but it doesn't really matter what the value is. */
+  height: 700px;
+  
+  /* For text formatting. */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  text-shadow: 0 0 0px #000;
+}
+
+.parallax::after {
+  /* Display and position the pseudo-element */
+  content: " ";
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  
+  /* Move the pseudo-element back away from the camera,
+   * then scale it back up to fill the viewport.
+   * Because the pseudo-element is further away, it appears to move more slowly, like in real life. */
+  transform: translateZ(-1px) scale(1.5);
+  /* Force the background image to fill the whole element. */
+  background-size: 100%;
+  /* Keep the image from overlapping sibling elements. */ 
+  z-index: -1;
+}
+
+.bg1::after {
+  background-image: url('../img/darkPara.jpeg');
+  background-position: 50%, 70%;
+}
+
+.bg2::after {
+  background-image: url('https://placekitten.com/g/800/600');
+}
+
+.paraText {
+  color: white;
+}
+
+#about {
+  position: relative;
+  display: block;
+  background-color: white;
+  z-index: 1;
+}
+
+#paraBtn  {
+     background:  transparent;
+     border:  2px solid white;
+     border-radius: 25px;
+     display: inline-block;
+     width: 30%;
+     padding: 10px 0px;
+ }
+
+#paraBtn:hover  {
+     color:  #db0011;
+     border: 2px solid #db0011;
+ }
