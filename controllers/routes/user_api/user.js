@@ -5,14 +5,7 @@ const gdb = require('../../groupController')
 
 /* GET users listing. */
 route.get('/', (req, res, next) => {
-  res.json(req.user);
-});
-
-/* GET user profile. */
-route.get('/groups', (req, res, next) => {
-    let user = req.user;  
-    let userData = {user:req.user, groups:udb
-    }    
+  res.json(udb.findUser(user.id));
 });
 
 route.get('/nav', (req,res,next) => {

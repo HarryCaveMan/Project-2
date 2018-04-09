@@ -72,10 +72,9 @@ module.exports = {
           order: [
               ['group_members', 'DESC']
           ],
-          limit: 5,
-          plain:true
+          limit: 5
           // again brings large array back, will have to select info we need here or server side
-      }).then( groups => groups.map(group => group.id));
+      }).then( groups => groups.map(group => {return {id:group.id,members:group.group_members};}));
   },
 
 

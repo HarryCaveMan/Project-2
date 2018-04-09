@@ -62,7 +62,7 @@ const authenticate =(user) => {
   let userToken = localStorage.getItem('EHUserToken');
   console.log(user);
 
-  $.post("http://eventhop.herokuapp.com/auth", user)
+  $.post("http://localhost:8080/auth", user)
   .done(
     (data,status,xhr) => {
       $.ajaxSetup({
@@ -72,7 +72,7 @@ const authenticate =(user) => {
       $("#loginModal").modal('toggle');
       console.log(data.user);
       $('.def-nav').remove();
-       $.get("http://eventhop.herokuapp.com/user/nav")
+       $.get("http://localhost:8080/user/nav")
             .done((data,status,xhr) => {
               $('#mainNav_items').append(data);
               googleMapInit();
@@ -398,22 +398,47 @@ googleMapInit = () => {
   
 };                 
 $(document).ready(event =>{
+    //on window load
+    $(window).scrollTop(0);  
+    let userToken = localStorage.getItem('EHUserToken');     
+    $.ajaxSetup({
+      beforeSend: xhr => xhr.setRequestHeader("Authorization",`Bearer ${userToken}`)
+    });
+    $.get("http://localhost:8080/user/nav")//try to load user nav extention to front end
+    .done((data,status,xhr) => {
+      $('#mainNav_items').append(data);
+    }).fail(xhr => {
+      console.log(xhr.responseText.message);//if request to login fails load non-user
+      $.get('http://localhost:8080/nav')
+      .done((data,status,xhr) => { console.log(data);
+        $('#mainNav_items').append(data);
+      })
+      .fail(err => console.log(err));              ;
+    });
+    $.get('http://localhost:8080/user')
+    .done((data,status,xhr)=>{
 
-            $(window).scrollTop(0);  
-            let userToken = localStorage.getItem('EHUserToken');     
-            $.ajaxSetup({
-              beforeSend: xhr => xhr.setRequestHeader("Authorization",`Bearer ${userToken}`)
-            });
-            $.get("http://eventhop.herokuapp.com/user/nav")
-            .done((data,status,xhr) => {
-              $('#mainNav_items').append(data);
-            }).fail(xhr => {
-              console.log(xhr.responseText.message);
-              $.get('http://eventhop.herokuapp.com/nav')
-              .done((data,status,xhr) => {
-                $('#mainNav_items').append(data);
-              });
-            });     
-
-});
-googleMapInit();
+      let grpBtns = $('#user-groups');
+      let groupIDs = data.Groups;
+      groupIDs.forEach(group => {
+        
+        grpbtns.append(
+            `<div class="col-md-4 col-sm-6 portfolio-item">
+              <a class="portfolio-link" data-toggle="modal" href="#show-route-modal" data-group="${group.id}">
+                <div class="portfolio-hover">
+                  <div class="portfolio-hover-content">
+                    <i class="fa fa-plus fa-3x"></i>
+                  </div>
+                </div>
+                <img class="img-fluid" src="public/img/portfolio/event-02.jpg" alt="">
+              </a>
+              <div class="portfolio-caption">
+               <p class="text-muted">|${group.members} members|</p>
+              </div>
+            </div>`
+          );
+      });
+    });
+    .fail();
+    googleMapInit();
+  });

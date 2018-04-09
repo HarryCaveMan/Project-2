@@ -25,10 +25,10 @@ function updatePassword(userId, password) {
 }
 
 // Allows user to find another user by their user name
-function findUser(userName) {
+function findUser(userId) {
     models.User.findOne({
         where: {
-            user_name: userName
+            id: userId
         },
         include:[{
             model: models.Groups,
@@ -47,4 +47,3 @@ function searchAllUsers() {
     }).then(users => console.log(users))
     .catch(err => console.log(err));
 }
-
