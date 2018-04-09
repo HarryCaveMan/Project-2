@@ -53,34 +53,60 @@ function createGroup(gname) {
   $.post("/create-group", gname, () => {console.log("success!")} );
 }
 
+
+const getUser = () => {
+        $.get('http://localhost:8080/user')//request user groups form server
+      .done((data,status,xhr)=>{
+        
+        data.Groups.forEach(group => {//generate buttons for user groups          
+          $('#user-groups').append(
+              `<div class="col-md-4 col-sm-6 portfolio-item">
+                <a class="portfolio-link" data-toggle="modal" href="#show-route-modal" data-group="${group.id}">
+                  <div class="portfolio-hover">
+                    <div class="portfolio-hover-content">
+                      <i class="fa fa-plus fa-3x"></i>
+                    </div>
+                  </div>
+                  <img class="img-fluid" src="public/img/portfolio/event-02.jpg" alt="">
+                </a>
+                <div class="portfolio-caption">
+                 <p class="text-muted">|${group.members} members|</p>
+                </div>
+              </div>`
+            );
+        });
+      })
+      .fail(err => $('#user-groups').html('<h3 class="section-subheading text-muted">Create custom groups!</h3>'));//no user, no groups D`:
+}
+
 //front end handshake
-//
-//Front end login receive signature
+//and
+//receive signature
 //
 const authenticate =(user) => {
+  //console.log(user);
 
-  let userToken = localStorage.getItem('EHUserToken');
-  console.log(user);
-
-  $.post("http://localhost:8080/auth", user)
+  $.post("http://localhost:8080/auth", user)//check login credentials with server
   .done(
     (data,status,xhr) => {
-      $.ajaxSetup({
+      $.ajaxSetup({ //set auth header for all subsequent ajax calls
         beforeSend: xhr => xhr.setRequestHeader("Authorization",`Bearer ${data.token}`)
       });
       localStorage.setItem('EHUserToken',data.token);
       $("#loginModal").modal('toggle');
       console.log(data.user);
-      $('.def-nav').remove();
-       $.get("http://localhost:8080/user/nav")
-            .done((data,status,xhr) => {
+      $('.def-nav').remove();//remove default navbar
+        $.get("http://localhost:8080/user/nav")//load user navbar extention
+        .done(      
+          (data,status,xht) => {
               $('#mainNav_items').append(data);
-              googleMapInit();
-            })
-          })
-      .fail(xhr => console.log(JSON.parse(xhr.responseText).message)); 
-}
+              getUser();
 
+        })      
+    })
+    .fail(xhr => console.log(JSON.parse(xhr.responseText).message)); 
+}
+//event listener for login button
 $('#login_form').on('submit', event => {
   event.preventDefault();
       authenticate({email:$('#username').val(),password:$('#password').val()});
@@ -89,8 +115,8 @@ $('#login_form').on('submit', event => {
 //
 //google maps api for create group
 //
-
 googleMapInit = () => {
+  //allocate resources
   let markers = [];
   let placesArr = [];
   let routeMarkers = [];
@@ -126,7 +152,8 @@ googleMapInit = () => {
     progressBar();
     routeCompleteCheck();
   });
-
+  
+  //stringifies the locations with & delimeter for eb route storage
   $("#openRouteModal").on('click', () => {
     resetProgress();
     completeRoute = startLoc + "&";
@@ -400,45 +427,22 @@ googleMapInit = () => {
 $(document).ready(event =>{
     //on window load
     $(window).scrollTop(0);  
-    let userToken = localStorage.getItem('EHUserToken');     
-    $.ajaxSetup({
+    let userToken = localStorage.getItem('EHUserToken');//check if user is logged in    
+    $.ajaxSetup({//if they are logged in, set auth header for all ajax calls
       beforeSend: xhr => xhr.setRequestHeader("Authorization",`Bearer ${userToken}`)
     });
     $.get("http://localhost:8080/user/nav")//try to load user nav extention to front end
     .done((data,status,xhr) => {
       $('#mainNav_items').append(data);
+      getUser();
     }).fail(xhr => {
-      console.log(xhr.responseText.message);//if request to login fails load non-user
-      $.get('http://localhost:8080/nav')
-      .done((data,status,xhr) => { console.log(data);
-        $('#mainNav_items').append(data);
+      $('#user-groups').html('<h3 class="section-subheading text-muted">Become a User and create custom groups!</h3>')
+      //console.log(xhr.responseText.message);
+      $.get('http://localhost:8080/nav')//load regular (non-user) navbar extensions
+      .done((data,status,xhr) => { //console.log(data);
+        $('#mainNav_items').append(data);//
       })
-      .fail(err => console.log(err));              ;
+      .fail(err => console.log(err));
     });
-    $.get('http://localhost:8080/user')
-    .done((data,status,xhr)=>{
-
-      let grpBtns = $('#user-groups');
-      let groupIDs = data.Groups;
-      groupIDs.forEach(group => {
-        
-        grpbtns.append(
-            `<div class="col-md-4 col-sm-6 portfolio-item">
-              <a class="portfolio-link" data-toggle="modal" href="#show-route-modal" data-group="${group.id}">
-                <div class="portfolio-hover">
-                  <div class="portfolio-hover-content">
-                    <i class="fa fa-plus fa-3x"></i>
-                  </div>
-                </div>
-                <img class="img-fluid" src="public/img/portfolio/event-02.jpg" alt="">
-              </a>
-              <div class="portfolio-caption">
-               <p class="text-muted">|${group.members} members|</p>
-              </div>
-            </div>`
-          );
-      });
-    });
-    .fail();
     googleMapInit();
   });
