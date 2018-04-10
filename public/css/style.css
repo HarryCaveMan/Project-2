@@ -947,7 +947,7 @@ ol.pro-meter li.todo:before {
   color: white;
 }
 
-#about {
+.paraSection {
   position: relative;
   display: block;
   background-color: white;
