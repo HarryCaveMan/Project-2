@@ -7,7 +7,7 @@
       var target = $(this.hash);
       target = target.length ? target : $('[name=' + this.hash.slice(1) + ']');
       if (target.length) {
-        $('html, body').animate({
+          $('html, body').animate({
           scrollTop: (target.offset().top - 54)
         }, 1000, "easeInOutExpo");
         return false;
@@ -21,23 +21,23 @@
   });
 
   // Use Bootstrap JS scrollspy with jQuery
-  $('body').scrollspy({
+  $('.wrapper').scrollspy({
     target: '#mainNav',
     offset: 56
   });
 
   // Collapse Navbar
   let navbarCollapse = () => {
-    if ($("#mainNav").offset().top > 100) {
-      $("#mainNav").addClass("navbar-shrink");
-    } else {
-      $("#mainNav").removeClass("navbar-shrink");
-    }
+      if ($(".wrapper").scrollTop() > 100) {
+        $("#mainNav").addClass("navbar-shrink");
+      } else {
+        $("#mainNav").removeClass("navbar-shrink");
+      }
   };
   // Collapse if page is not at top
   navbarCollapse();
   // Collapse the navbar when page is scrolled
-  $(window).scroll(navbarCollapse);
+  $('.wrapper').scroll(navbarCollapse);
 
   // Hide navbar when modals trigger
   $('.portfolio-modal').on('show.bs.modal', e => {
@@ -126,7 +126,6 @@ googleMapInit = () => {
   let secondLoc = "";
   let lastLoc = "";
   let completeRoute = "";
-
   //on change, gets the value from the selected location and makes the marker bounce to show the user where it is
   $("#map-select").change(() => {
     if (markers[mapNum] === true && markers[mapNum].getAnimation() != null) {
@@ -308,8 +307,6 @@ googleMapInit = () => {
 
   // Takes the google Places Details object and parses out useful information and builds a card for each location in the loop.  Card div is then pushed to the DOM
   function createInfoBox(place) {
-    
-    
     if(place.photos) {
       var photos = place.photos[0].getUrl({
         maxWidth: 270,
@@ -317,8 +314,7 @@ googleMapInit = () => {
       });
     } else {
       var photos = "public/img/portfolio/durham.jpeg";
-    }
-          
+    }    
     let placeInfoBox = ` 
                     <div class="card bg-light">
                         <div class="row">
@@ -407,7 +403,7 @@ googleMapInit = () => {
     }
   }
   
-
+  // sets the downtown area as the center and then passes through the chosen locations to the Google Directions services to create a route between them
   function displayRoute(firstLocation, secondLocation, lastLocation) {
     //Create the directions services
     let directionsService = new google.maps.DirectionsService();
@@ -422,9 +418,8 @@ googleMapInit = () => {
     directionsDisplay.setPanel(document.getElementById('directionsPanel'));
 
     calculateAndDisplayRoute(directionsService, directionsDisplay, firstLocation, secondLocation, lastLocation);
-
   }
-
+  // this function uses the Google Directions API to take the three locations the user has selected and form the fastest walking route between the three and give walking directions/walk time/distance in a toggleable section
   function calculateAndDisplayRoute(directionsService, directionsDisplay, firstLocation, secondLocation, lastLocation) {
     directionsService.route(
       {
@@ -451,7 +446,17 @@ googleMapInit = () => {
       }
     );
   }
+  
+  //this function takes the full route string from the database an splits it into the three locations to be entered in the Google Directions API 
+  function dbStringToRoute(routeString) {
+    let routeArr = routeString.split("&");
+    startLoc = routeArr[0];
+    secondLoc = routeArr[1];
+    lastLoc = routeArr[2];
+    displayRoute(startLoc, secondLoc, lastLoc);
+  }
 
+  // this function resets the map without doing an area search on downtown durham with no category, so that the user won't get rate limited between picking route locations
   var resetMap = () => {
     // clears these variables/elements so they can be repopulated based on the location categories when the user changes them
     placesArr = [];
@@ -467,6 +472,7 @@ googleMapInit = () => {
   }
 
 };                 
+
 $(document).ready(event =>{
     //on window load
     $(window).scrollTop(0);  

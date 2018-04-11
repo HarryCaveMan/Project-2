@@ -13,10 +13,13 @@ Colors:
 
 */
 
-
+html,body{
+  overflow-x:hidden;
+  width:100%;
+}
 
 body {
-  overflow-x: hidden;
+  position:relative;
   font-family: 'Roboto Slab', 'Helvetica Neue', Helvetica, Arial, sans-serif;
 }
 
@@ -129,7 +132,7 @@ img::-moz-selection {
   text-transform: uppercase;
   color: white;
   border: 0;
-  background-color: #647595;
+  background-color: #db0011;
   font-family: 'Montserrat', 'Helvetica Neue', Helvetica, Arial, sans-serif;
 }
 
@@ -140,7 +143,7 @@ img::-moz-selection {
 }
 
 #mainNav .navbar-brand.active, #mainNav .navbar-brand:active, #mainNav .navbar-brand:focus, #mainNav .navbar-brand:hover {
-  color: #647595;
+  color: #db0011;
 }
 
 #mainNav .navbar-nav .nav-item .nav-link {
@@ -153,7 +156,7 @@ img::-moz-selection {
 }
 
 #mainNav .navbar-nav .nav-item .nav-link.active, #mainNav .navbar-nav .nav-item .nav-link:hover {
-  color: #647595;
+  color: #db0011;
 }
 
 #login-modal-header{
@@ -899,6 +902,7 @@ ol.pro-meter li.todo:before {
   overflow-y: auto;
   /* Set the perspective to 2px. This is essentailly the simulated distance from the viewport to transformed objects.*/
   perspective: 2px;
+  width:100%;
 }
 
 .section {
@@ -923,6 +927,9 @@ ol.pro-meter li.todo:before {
   right: 0;
   bottom: 0;
   left: 0;
+
+  width:100%;
+  overflow:hidden;
   
   /* Move the pseudo-element back away from the camera,
    * then scale it back up to fill the viewport.
@@ -935,12 +942,12 @@ ol.pro-meter li.todo:before {
 }
 
 .bg1::after {
+  width:100%;
+  overflow:hidden;
   background-image: url('../img/darkPara.jpeg');
   background-position: 50%, 70%;
-}
-
-.bg2::after {
-  background-image: url('https://placekitten.com/g/800/600');
+  background-repeat: no-repeat;
+  background-size: cover;
 }
 
 .paraText {
@@ -966,4 +973,12 @@ ol.pro-meter li.todo:before {
 #paraBtn:hover  {
      color:  #db0011;
      border: 2px solid #db0011;
+ }
+
+ .red {
+   color: #db0011;
+ }
+
+ h1, h2, h3, h4, h5 {
+   color: #db0011;
  }
